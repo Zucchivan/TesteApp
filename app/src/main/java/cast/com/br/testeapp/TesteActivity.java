@@ -1,38 +1,41 @@
 package cast.com.br.testeapp;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.ListView;
 
+import java.util.ArrayList;
 
-public class TesteActivity extends ActionBarActivity {
+public class TesteActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teste);
+
+        ArrayList<Client> clients = getClients();
+
+        ClientListAdapter adapter = new ClientListAdapter(TesteActivity.this, clients);
+
+        ListView listViewClients = (ListView) findViewById(R.id.listViewClients);
+        listViewClients.setAdapter(adapter);
+
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_teste, menu);
-        return true;
-    }
+    private ArrayList<Client> getClients() {
+        ArrayList<Client> clients = new ArrayList<>();
+        Client client1 = new Client();
+        client1.setAge(19);
+        client1.setName("Ivan");
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        Client client2 = new Client();
+        client1.setAge(439);
+        client1.setName("Cleiton");
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        clients.add(client1);
+        clients.add(client2);
+        return clients;
     }
 }

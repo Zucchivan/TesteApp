@@ -3,4 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="meuBotaozinho">New Button</string>
+    <string name="minhaViewzinha">Medium Text</string>
+    <string name="login">Login</string>
+    <string name="userName">User name</string>
+    <string name="password" >Password</string>
 </resources>
