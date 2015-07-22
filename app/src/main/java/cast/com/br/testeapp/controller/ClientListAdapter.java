@@ -1,4 +1,4 @@
-package cast.com.br.testeapp;
+package cast.com.br.testeapp.controller;
 
 import android.app.Activity;
 import android.view.View;
@@ -7,6 +7,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
+
+import cast.com.br.testeapp.model.entity.Client;
+import cast.com.br.testeapp.R;
 
 /**
  * Created by Administrador on 20/07/2015.
@@ -45,6 +48,12 @@ public class ClientListAdapter extends BaseAdapter {
 
         TextView textAge = (TextView) view.findViewById(R.id.textViewAge);
         textAge.setText(clientList.get(position).getAge());
+
+        TextView textAddress = (TextView) view.findViewById(R.id.textViewAddress);
+        textAddress.setText(clientList.get(position).getAddress());
+
+        TextView textPhone = (TextView) view.findViewById(R.id.textViewPhone);
+        textPhone.setText(clientList.get(position).getPhone());
 
         return view;
     }

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">TesteApp</string>
-
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="meuBotaozinho">New Button</string>
@@ -8,4 +7,10 @@
     <string name="login">Login</string>
     <string name="userName">User name</string>
     <string name="password" >Password</string>
+    <string name="clientName" >Name</string>
+    <string name="clientAge" >Age</string>
+    <string name="clientPhone" >Phone</string>
+    <string name="clientAddress" >Address</string>
+    <string name="save">Save</string>
+    <string name="successSave">Success!</string>
 </resources>

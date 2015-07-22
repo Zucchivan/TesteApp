@@ -1,11 +1,12 @@
-package cast.com.br.testeapp;
+package cast.com.br.testeapp.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
+import cast.com.br.testeapp.R;
 
 /**
  * Created by Administrador on 20/07/2015.
@@ -29,8 +30,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent goToMainActivity = new Intent(LoginActivity.this, TesteActivity.class);
                 startActivity(goToMainActivity);
-
-
             }
         });
     }
