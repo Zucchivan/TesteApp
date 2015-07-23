@@ -13,4 +13,8 @@
     <string name="clientAddress" >Address</string>
     <string name="save">Save</string>
     <string name="successSave">Success!</string>
+    <string name="requiredField">Required Field</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="deleted_message">Deleted</string>
 </resources>

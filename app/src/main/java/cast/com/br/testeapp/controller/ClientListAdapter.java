@@ -43,18 +43,24 @@ public class ClientListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = context.getLayoutInflater().inflate(R.layout.client_list_item, parent, false);
 
+        Client client = clientList.get(position);
+
         TextView textName = (TextView) view.findViewById(R.id.textViewName);
-        textName.setText(clientList.get(position).getName());
+        textName.setText(client.getName());
 
         TextView textAge = (TextView) view.findViewById(R.id.textViewAge);
-        textAge.setText(clientList.get(position).getAge());
+        textAge.setText(client.getAge().toString());
 
         TextView textAddress = (TextView) view.findViewById(R.id.textViewAddress);
-        textAddress.setText(clientList.get(position).getAddress());
+        textAddress.setText(client.getAddress());
 
         TextView textPhone = (TextView) view.findViewById(R.id.textViewPhone);
-        textPhone.setText(clientList.get(position).getPhone());
+        textPhone.setText(client.getPhone());
 
         return view;
+    }
+
+    public void addAll(List<Client> clients){
+        this.clientList = clients;
     }
 }

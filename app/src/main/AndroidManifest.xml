@@ -9,7 +9,7 @@
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name=".controller.TesteActivity"
+            android:name=".controller.ClientListActivity"
             android:label="@string/app_name" >
         </activity>
 

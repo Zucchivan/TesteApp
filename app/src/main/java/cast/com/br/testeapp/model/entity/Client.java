@@ -1,5 +1,9 @@
 package cast.com.br.testeapp.model.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.List;
 
 import cast.com.br.testeapp.model.persistence.MemoryClientRepository;
@@ -7,13 +11,19 @@ import cast.com.br.testeapp.model.persistence.MemoryClientRepository;
 /**
  * Created by Administrador on 20/07/2015.
  */
-public class Client {
+public class Client implements Serializable, Parcelable {
 
     private String name;
     private Integer age;
     private String address;
-
     private String phone;
+
+    public Client(){  super();  }
+
+    public Client(Parcel in){
+        super();
+        readToParcel(in);
+    }
 
     public void save(){
         MemoryClientRepository.getInstance().save((this));
@@ -22,6 +32,18 @@ public class Client {
     public static List<Client> getAll(){
         return MemoryClientRepository.getInstance().getAll();
     }
+
+    public static final Parcelable.Creator<Client> CREATOR = new Creator<Client>() {
+        @Override
+        public Client createFromParcel(Parcel source) {
+            return new Client(source);
+        }
+
+        @Override
+        public Client[] newArray(int size) {
+            return new Client[size];
+        }
+    };
 
     public Integer getAge() {
         return age;
@@ -72,5 +94,30 @@ public class Client {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (age != null ? age.hashCode() : 0);
         return result;
+    }
+
+    public void delete() {
+        MemoryClientRepository.getInstance().delete(this);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    private void readToParcel(Parcel in) {
+        name = in.readString();
+        int partialAge = in.readInt();
+        age = partialAge == -1 ? null : partialAge;
+        phone = in.readString();
+        address = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name == null ? "" : this.name);
+        dest.writeInt(this.age == null ? -1 : this.age);
+        dest.writeString(this.phone == null ? "" : this.phone);
+        dest.writeString(this.address == null ? "" : this.address);
     }
 }

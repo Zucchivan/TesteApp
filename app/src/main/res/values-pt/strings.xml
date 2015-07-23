@@ -12,5 +12,5 @@
     <string name="clientAge" >Idade</string>
     <string name="clientPhone" >Telefone</string>
     <string name="clientAddress" >Endereço</string>
-    <string name="save">save</string>
+    <string name="save">Salvar</string>
 </resources>
