@@ -12,5 +12,6 @@ public interface ClientRepository {
     public void save(Client client);
     public List<Client> getAll();
     public void delete(Client client);
+    public Client getById(Integer id);
 
 }

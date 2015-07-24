@@ -1,5 +1,7 @@
 package cast.com.br.testeapp.controller;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -61,9 +63,16 @@ public class ClientListActivity extends AppCompatActivity {
                 startActivity(goToCrudActivity);
                 break;
             case R.id.deleteClient:
-                client.delete();
-                refreshClientList();
-                Toast.makeText(ClientListActivity.this, R.string.deleted_message, Toast.LENGTH_LONG).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(ClientListActivity.this);
+                builder.setMessage(R.string.confirm_delete).setTitle(R.string.delete).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        client.delete();
+                        Toast.makeText(ClientListActivity.this, R.string.deleted_message, Toast.LENGTH_LONG).show();
+                        refreshClientList();
+                    }
+                }).create().show();
                 break;
             default:
                 break;
@@ -107,4 +116,11 @@ public class ClientListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
 }

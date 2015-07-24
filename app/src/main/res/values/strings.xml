@@ -17,4 +17,6 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="deleted_message">Deleted</string>
+    <string name="confirm_delete">Are you sure?</string>
+    <string name="yes">Yes</string>
 </resources>

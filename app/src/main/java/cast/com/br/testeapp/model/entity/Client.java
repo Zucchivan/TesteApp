@@ -7,12 +7,14 @@ import java.io.Serializable;
 import java.util.List;
 
 import cast.com.br.testeapp.model.persistence.MemoryClientRepository;
+import cast.com.br.testeapp.model.persistence.SQLiteClientRepository;
 
 /**
  * Created by Administrador on 20/07/2015.
  */
 public class Client implements Serializable, Parcelable {
 
+    private Integer id;
     private String name;
     private Integer age;
     private String address;
@@ -26,11 +28,11 @@ public class Client implements Serializable, Parcelable {
     }
 
     public void save(){
-        MemoryClientRepository.getInstance().save((this));
+        SQLiteClientRepository.getInstance().save(this);
     }
 
     public static List<Client> getAll(){
-        return MemoryClientRepository.getInstance().getAll();
+        return SQLiteClientRepository.getInstance().getAll();
     }
 
     public static final Parcelable.Creator<Client> CREATOR = new Creator<Client>() {
@@ -84,20 +86,27 @@ public class Client implements Serializable, Parcelable {
 
         Client client = (Client) o;
 
+        if (id != null ? !id.equals(client.id) : client.id != null) return false;
         if (name != null ? !name.equals(client.name) : client.name != null) return false;
-        return !(age != null ? !age.equals(client.age) : client.age != null);
+        if (age != null ? !age.equals(client.age) : client.age != null) return false;
+        if (address != null ? !address.equals(client.address) : client.address != null)
+            return false;
+        return !(phone != null ? !phone.equals(client.phone) : client.phone != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (age != null ? age.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (phone != null ? phone.hashCode() : 0);
         return result;
     }
 
     public void delete() {
-        MemoryClientRepository.getInstance().delete(this);
+        SQLiteClientRepository.getInstance().delete(this);
     }
 
     @Override
@@ -106,6 +115,7 @@ public class Client implements Serializable, Parcelable {
     }
 
     private void readToParcel(Parcel in) {
+        id = in.readInt();
         name = in.readString();
         int partialAge = in.readInt();
         age = partialAge == -1 ? null : partialAge;
@@ -116,8 +126,17 @@ public class Client implements Serializable, Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name == null ? "" : this.name);
+        dest.writeInt(this.id == null ? -1 : this.id);
         dest.writeInt(this.age == null ? -1 : this.age);
         dest.writeString(this.phone == null ? "" : this.phone);
         dest.writeString(this.address == null ? "" : this.address);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

@@ -44,6 +44,7 @@ public class ClientCrudActivity extends AppCompatActivity {
             this.client = (Client) getIntent().getExtras().getParcelable(CLIENT_PARAM);
             if(client != null){
                 bindForm(this.client);
+            } else {
                 throw new IllegalArgumentException();
             }
         }
@@ -56,7 +57,9 @@ public class ClientCrudActivity extends AppCompatActivity {
     }
 
     private Client bindClient(){
-        Client client = new Client();
+        if(client == null) {
+            Client client = new Client();
+        }
         client.setName(editTextName.getText().toString());
         client.setAge(Integer.valueOf(editTextAge.getText() == null ? "" : editTextAge.getText().toString()));
         client.setAddress(editTextAddress.getText().toString());
@@ -67,8 +70,8 @@ public class ClientCrudActivity extends AppCompatActivity {
     private void bindForm(Client clientBind){
         editTextName.setText(clientBind.getName());
         editTextAge.setText(clientBind.getAge().toString());
-        editTextPhone.setText(clientBind.getPhone());
         editTextAddress.setText(clientBind.getAddress());
+        editTextPhone.setText(clientBind.getPhone());
     }
 
 
@@ -76,7 +79,6 @@ public class ClientCrudActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.saveItemClientCrud:
-
                 if(FormHelper.requireValidate(ClientCrudActivity.this, this.getArrayEditTexts())){
                     Client client = bindClient();
                     client.save();
@@ -87,7 +89,6 @@ public class ClientCrudActivity extends AppCompatActivity {
             default:
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

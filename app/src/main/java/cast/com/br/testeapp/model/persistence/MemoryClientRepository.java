@@ -40,4 +40,9 @@ public class MemoryClientRepository implements ClientRepository{
     public void delete(Client client) {
         this.clients.remove(client);
     }
+
+    @Override
+    public Client getById(Integer id) {
+        return null;
+    }
 }
