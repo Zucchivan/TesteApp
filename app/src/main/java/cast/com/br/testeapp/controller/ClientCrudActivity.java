@@ -57,14 +57,20 @@ public class ClientCrudActivity extends AppCompatActivity {
     }
 
     private Client bindClient(){
-        if(client == null) {
-            Client client = new Client();
+        if(this.client == null) {
+            Client cli = new Client();
+            cli.setName(editTextName.getText().toString());
+            cli.setAge(Integer.valueOf(editTextAge.getText() == null ? "" : editTextAge.getText().toString()));
+            cli.setAddress(editTextAddress.getText().toString());
+            cli.setPhone(editTextPhone.getText().toString());
+            return cli;
+        } else {
+            this.client.setName(editTextName.getText().toString());
+            this.client.setAge(Integer.valueOf(editTextAge.getText() == null ? "" : editTextAge.getText().toString()));
+            this.client.setAddress(editTextAddress.getText().toString());
+            this.client.setPhone(editTextPhone.getText().toString());
+            return this.client;
         }
-        client.setName(editTextName.getText().toString());
-        client.setAge(Integer.valueOf(editTextAge.getText() == null ? "" : editTextAge.getText().toString()));
-        client.setAddress(editTextAddress.getText().toString());
-        client.setPhone(editTextPhone.getText().toString());
-        return client;
     }
 
     private void bindForm(Client clientBind){
