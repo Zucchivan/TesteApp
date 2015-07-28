@@ -6,18 +6,18 @@ package cast.com.br.testeapp.model.entity;
 public class ClientAddress {
 
       private String cep;
-      private String tpLogradouro;
+      private String tipoDeLogradouro;
       private String logradouro;
       private String bairro;
       private String cidade;
       private String estado;
 
-    public String getTpLogradouro() {
-        return tpLogradouro;
+    public String getTipoDeLogradouro() {
+        return tipoDeLogradouro;
     }
 
-    public void setTpLogradouro(String tpLogradouro) {
-        this.tpLogradouro = tpLogradouro;
+    public void setTipoDeLogradouro(String tipoLogradouro) {
+        this.tipoDeLogradouro = tipoLogradouro;
     }
 
     public String getCep() {

@@ -19,6 +19,12 @@
     <string name="deleted_message">Deleted</string>
     <string name="confirm_delete">Are you sure?</string>
     <string name="yes">Yes</string>
-    <string name="cep">CEP</string>
-    <string name="findCep">Find Cep</string>
+    <string name="zipCode">Zip Code</string>
+    <string name="findZipCode">Find Zip Code</string>
+    <string name="streetType">StreetType</string>
+    <string name="street">Street</string>
+    <string name="neighborhood">Neighborhood</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="loading">Loading</string>
 </resources>

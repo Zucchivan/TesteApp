@@ -17,21 +17,21 @@ public final class CepService {
 
     private static final String URL = "http://correiosapi.apphb.com/cep/";
 
-    private CepService(){
+    private CepService() {
         super();
     }
 
-    public static ClientAddress getAddressBy(String cep){
+    public static ClientAddress getAddressBy(String cep) {
         ClientAddress address = null;
         try {
-            URL url = new URL(URL);
+            URL url = new URL(URL + cep);
             final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
 
             int responseCode = conn.getResponseCode();
 
-            if(responseCode != HttpURLConnection.HTTP_OK){
+            if (responseCode != HttpURLConnection.HTTP_OK) {
                 throw new RuntimeException("Error code: " + responseCode);
             }
 
@@ -41,7 +41,7 @@ public final class CepService {
             address = objectMapper.readValue(inputStream, ClientAddress.class);
 
             conn.disconnect();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return address;

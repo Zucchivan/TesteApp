@@ -1,5 +1,6 @@
 package cast.com.br.testeapp.controller;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,9 +29,13 @@ public class ClientCrudActivity extends AppCompatActivity {
 
     private EditText editTextName;
     private EditText editTextAge;
-    private EditText editTextAddress;
     private EditText editTextPhone;
-    private EditText editTextCep;
+    private EditText editTextZipCode;
+    private EditText editTextStreetType;
+    private EditText editTextStreet;
+    private EditText editTextNeighborhood;
+    private EditText editTextCity;
+    private EditText editTextState;
     private Button btnFindAddress;
     private List<EditText> editTexts;
     private Client client;
@@ -44,14 +49,18 @@ public class ClientCrudActivity extends AppCompatActivity {
 
         editTextName = (EditText) findViewById(R.id.editTextClientName);
         editTextAge = (EditText)findViewById(R.id.editTextClientAge);
-        editTextAddress = (EditText)findViewById(R.id.editTextClientAdress);
         editTextPhone = (EditText)findViewById(R.id.editTextClientPhone);
-        editTextCep = (EditText)findViewById(R.id.editTextCep);
+        editTextZipCode = (EditText)findViewById(R.id.editTextClientZipCode);
+        editTextStreetType = (EditText)findViewById(R.id.editTextClientStreetType);
+        editTextStreet = (EditText)findViewById(R.id.editTextClientStreet);
+        editTextNeighborhood = (EditText)findViewById(R.id.editTextClientNeighborhood);
+        editTextCity = (EditText)findViewById(R.id.editTextClientCity);
+        editTextState = (EditText)findViewById(R.id.editTextClientState);
         btnFindAddress = (Button)findViewById(R.id.btnFindAddress);
         btnFindAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new GetAddressByCep().execute(editTextCep.getText().toString());
+                new GetAddressByCep().execute(editTextZipCode.getText().toString());
             }
         });
 
@@ -76,14 +85,24 @@ public class ClientCrudActivity extends AppCompatActivity {
             Client cli = new Client();
             cli.setName(editTextName.getText().toString());
             cli.setAge(Integer.valueOf(editTextAge.getText() == null ? "" : editTextAge.getText().toString()));
-            cli.setAddress(editTextAddress.getText().toString());
             cli.setPhone(editTextPhone.getText().toString());
+            cli.setZipCode(editTextZipCode.getText().toString());
+            cli.setStreetType(editTextStreetType.getText().toString());
+            cli.setStreet(editTextStreet.getText().toString());
+            cli.setNeighborhood(editTextNeighborhood.getText().toString());
+            cli.setCity(editTextCity.getText().toString());
+            cli.setState(editTextState.getText().toString());
             return cli;
         } else {
             this.client.setName(editTextName.getText().toString());
             this.client.setAge(Integer.valueOf(editTextAge.getText() == null ? "" : editTextAge.getText().toString()));
-            this.client.setAddress(editTextAddress.getText().toString());
             this.client.setPhone(editTextPhone.getText().toString());
+            this.client.setZipCode(editTextZipCode.getText().toString());
+            this.client.setStreetType(editTextStreetType.getText().toString());
+            this.client.setStreet(editTextStreet.getText().toString());
+            this.client.setNeighborhood(editTextNeighborhood.getText().toString());
+            this.client.setCity(editTextCity.getText().toString());
+            this.client.setState(editTextState.getText().toString());
             return this.client;
         }
     }
@@ -91,8 +110,13 @@ public class ClientCrudActivity extends AppCompatActivity {
     private void bindForm(Client clientBind){
         editTextName.setText(clientBind.getName());
         editTextAge.setText(clientBind.getAge().toString());
-        editTextAddress.setText(clientBind.getAddress());
         editTextPhone.setText(clientBind.getPhone());
+        editTextZipCode.setText(clientBind.getZipCode());
+        editTextStreetType.setText(clientBind.getStreetType());
+        editTextStreet.setText(clientBind.getStreet());
+        editTextNeighborhood.setText(clientBind.getNeighborhood());
+        editTextCity.setText(clientBind.getCity());
+        editTextState.setText(clientBind.getState());
     }
 
 
@@ -115,17 +139,27 @@ public class ClientCrudActivity extends AppCompatActivity {
 
     private EditText[] getArrayEditTexts(){
         List<EditText> edits = new ArrayList<>();
-        EditText[] array = new EditText[4];
+        EditText[] array = new EditText[10];
 
         editTextName = (EditText) findViewById(R.id.editTextClientName);
         editTextAge = (EditText)findViewById(R.id.editTextClientAge);
-        editTextAddress = (EditText)findViewById(R.id.editTextClientAdress);
         editTextPhone = (EditText)findViewById(R.id.editTextClientPhone);
+        editTextZipCode = (EditText)findViewById(R.id.editTextClientPhone);
+        editTextStreetType = (EditText)findViewById(R.id.editTextClientPhone);
+        editTextStreet = (EditText)findViewById(R.id.editTextClientPhone);
+        editTextNeighborhood = (EditText)findViewById(R.id.editTextClientPhone);
+        editTextCity = (EditText)findViewById(R.id.editTextClientPhone);
+        editTextState = (EditText)findViewById(R.id.editTextClientPhone);
 
         edits.add(editTextName);
         edits.add(editTextAge);
-        edits.add(editTextAddress);
         edits.add(editTextPhone);
+        edits.add(editTextZipCode);
+        edits.add(editTextStreetType);
+        edits.add(editTextStreet);
+        edits.add(editTextNeighborhood);
+        edits.add(editTextCity);
+        edits.add(editTextState);
 
         int i = 0;
         for(EditText editText : edits){
@@ -138,11 +172,31 @@ public class ClientCrudActivity extends AppCompatActivity {
 
     private class GetAddressByCep extends AsyncTask<String, Void, ClientAddress> {
 
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(ClientCrudActivity.this);
+            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.show();
+        }
+
         @Override
         protected ClientAddress doInBackground(String... params) {
             return CepService.getAddressBy(params[0]);
         }
 
+        @Override
+        protected void onPostExecute(ClientAddress clientAddress) {
+            progressDialog.dismiss();
+            if(clientAddress != null) {
+                editTextStreetType.setText(clientAddress.getTipoDeLogradouro());
+                editTextStreet.setText(clientAddress.getLogradouro());
+                editTextNeighborhood.setText(clientAddress.getBairro());
+                editTextCity.setText(clientAddress.getCidade());
+                editTextState.setText(clientAddress.getEstado());
+            }
+        }
     }
 
 }

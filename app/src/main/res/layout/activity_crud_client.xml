@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -22,26 +28,47 @@
         android:layout_height="wrap_content"
         android:hint="@string/clientPhone"/>
 
-    <EditText
-        android:id="@+id/editTextClientAdress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/clientAddress"/>
-
-    <EditText
-        android:id="@+id/editTextCep"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/cep"/>
-
     <Button
         android:id="@+id/btnFindAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/findCep"/>
+        android:text="@string/findZipCode"/>
 
+    <EditText
+        android:id="@+id/editTextClientZipCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/zipCode"/>
 
+    <EditText
+        android:id="@+id/editTextClientStreetType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/streetType"/>
 
+    <EditText
+        android:id="@+id/editTextClientStreet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/street"/>
 
+    <EditText
+        android:id="@+id/editTextClientNeighborhood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/neighborhood"/>
+
+    <EditText
+        android:id="@+id/editTextClientCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/city"/>
+
+    <EditText
+        android:id="@+id/editTextClientState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/state"/>
 
 </LinearLayout>
+</ScrollView>
