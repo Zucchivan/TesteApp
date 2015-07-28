@@ -1,9 +1,12 @@
 package cast.com.br.testeapp.controller;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -12,6 +15,8 @@ import java.util.List;
 
 import cast.com.br.testeapp.R;
 import cast.com.br.testeapp.model.entity.Client;
+import cast.com.br.testeapp.model.entity.ClientAddress;
+import cast.com.br.testeapp.model.services.CepService;
 import cast.com.br.testeapp.util.FormHelper;
 
 /**
@@ -25,6 +30,8 @@ public class ClientCrudActivity extends AppCompatActivity {
     private EditText editTextAge;
     private EditText editTextAddress;
     private EditText editTextPhone;
+    private EditText editTextCep;
+    private Button btnFindAddress;
     private List<EditText> editTexts;
     private Client client;
 
@@ -39,6 +46,14 @@ public class ClientCrudActivity extends AppCompatActivity {
         editTextAge = (EditText)findViewById(R.id.editTextClientAge);
         editTextAddress = (EditText)findViewById(R.id.editTextClientAdress);
         editTextPhone = (EditText)findViewById(R.id.editTextClientPhone);
+        editTextCep = (EditText)findViewById(R.id.editTextCep);
+        btnFindAddress = (Button)findViewById(R.id.btnFindAddress);
+        btnFindAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new GetAddressByCep().execute(editTextCep.getText().toString());
+            }
+        });
 
         if(extras != null) {
             this.client = (Client) getIntent().getExtras().getParcelable(CLIENT_PARAM);
@@ -121,5 +136,13 @@ public class ClientCrudActivity extends AppCompatActivity {
         return array;
     }
 
+    private class GetAddressByCep extends AsyncTask<String, Void, ClientAddress> {
+
+        @Override
+        protected ClientAddress doInBackground(String... params) {
+            return CepService.getAddressBy(params[0]);
+        }
+
+    }
 
 }

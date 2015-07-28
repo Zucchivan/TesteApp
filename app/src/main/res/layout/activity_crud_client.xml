@@ -28,6 +28,19 @@
         android:layout_height="wrap_content"
         android:hint="@string/clientAddress"/>
 
+    <EditText
+        android:id="@+id/editTextCep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/cep"/>
+
+    <Button
+        android:id="@+id/btnFindAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/findCep"/>
+
+
 
 
 
