@@ -1,5 +1,7 @@
 package cast.com.br.testeapp.model.services;
 
+import android.util.Log;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -8,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import cast.com.br.testeapp.R;
 import cast.com.br.testeapp.model.entity.ClientAddress;
 
 /**
@@ -32,7 +35,7 @@ public final class CepService {
             int responseCode = conn.getResponseCode();
 
             if (responseCode != HttpURLConnection.HTTP_OK) {
-                throw new RuntimeException("Error code: " + responseCode);
+                Log.w("TAG", String.valueOf(R.string.serviceWarning));
             }
 
             InputStream inputStream = conn.getInputStream();

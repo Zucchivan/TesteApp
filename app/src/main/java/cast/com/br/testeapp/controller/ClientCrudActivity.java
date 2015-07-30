@@ -1,12 +1,20 @@
 package cast.com.br.testeapp.controller;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -36,7 +44,6 @@ public class ClientCrudActivity extends AppCompatActivity {
     private EditText editTextNeighborhood;
     private EditText editTextCity;
     private EditText editTextState;
-    private Button btnFindAddress;
     private List<EditText> editTexts;
     private Client client;
 
@@ -48,6 +55,25 @@ public class ClientCrudActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         editTextName = (EditText) findViewById(R.id.editTextClientName);
+        editTextName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_edittext_client, 0);
+        editTextName.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (editTextName.getRight() - editTextName.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        final Intent goToSOContacts = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                        goToSOContacts.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE); // Show user only contacts w/ phone numbers
+                        startActivityForResult(goToSOContacts, 999);
+                    }
+                }
+                return false;
+            }
+        });
         editTextAge = (EditText)findViewById(R.id.editTextClientAge);
         editTextPhone = (EditText)findViewById(R.id.editTextClientPhone);
         editTextZipCode = (EditText)findViewById(R.id.editTextClientZipCode);
@@ -56,10 +82,11 @@ public class ClientCrudActivity extends AppCompatActivity {
         editTextNeighborhood = (EditText)findViewById(R.id.editTextClientNeighborhood);
         editTextCity = (EditText)findViewById(R.id.editTextClientCity);
         editTextState = (EditText)findViewById(R.id.editTextClientState);
-        btnFindAddress = (Button)findViewById(R.id.btnFindAddress);
-        btnFindAddress.setOnClickListener(new View.OnClickListener() {
+
+        editTextZipCode.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus)
                 new GetAddressByCep().execute(editTextZipCode.getText().toString());
             }
         });
@@ -197,6 +224,34 @@ public class ClientCrudActivity extends AppCompatActivity {
                 editTextState.setText(clientAddress.getEstado());
             }
         }
+    }
+
+    /**
+     * @see <a href="http://developer.android.com/training/basics/intents/result.html">Getting a Result from an Activity</a>
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 999) {
+            if (resultCode == Activity.RESULT_OK) {
+                try {
+                    final Uri contactUri = data.getData();
+                    final String[] projection = {
+                            ContactsContract.CommonDataKinds.Identity.DISPLAY_NAME,
+                            ContactsContract.CommonDataKinds.Phone.NUMBER
+                    };
+                    final Cursor cursor = getContentResolver().query(contactUri, projection, null, null, null);
+                    cursor.moveToFirst();
+
+                    editTextName.setText(cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Identity.DISPLAY_NAME)));
+                    editTextPhone.setText(cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+
+                    cursor.close();
+                } catch (Exception e) {
+                    Log.d("TAG", "Unexpected error");
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 }

@@ -27,4 +27,7 @@
     <string name="city">City</string>
     <string name="state">State</string>
     <string name="loading">Loading</string>
+    <string name="serviceWarning">Access failed or invalid Zip Code</string>
+    <string name="share">Share</string>
+    <string name="enjoy">Enjoy a free app to storage your clients!</string>
 </resources>

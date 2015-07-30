@@ -48,24 +48,6 @@ public class ClientListAdapter extends BaseAdapter {
         TextView textName = (TextView) view.findViewById(R.id.textViewName);
         textName.setText(client.getName());
 
-        TextView textAge = (TextView) view.findViewById(R.id.textViewAge);
-        textAge.setText(client.getAge().toString());
-
-        TextView textPhone = (TextView) view.findViewById(R.id.textViewPhone);
-        textPhone.setText(client.getPhone());
-
-        TextView textZipCode = (TextView) view.findViewById(R.id.textViewZipCode);
-        textZipCode.setText(client.getZipCode());
-
-        TextView textStreetType = (TextView) view.findViewById(R.id.textViewStreetType);
-        textStreetType.setText(client.getStreetType());
-
-        TextView textStreet = (TextView) view.findViewById(R.id.textViewStreet);
-        textStreet.setText(client.getStreet());
-
-        TextView textNeighborhood = (TextView) view.findViewById(R.id.textViewNeighborhood);
-        textNeighborhood.setText(client.getNeighborhood());
-
         TextView textCity = (TextView) view.findViewById(R.id.textViewCity);
         textCity.setText(client.getCity());
 

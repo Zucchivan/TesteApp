@@ -16,12 +16,14 @@ public final class FormHelper {
     public static boolean requireValidate(Context context, EditText... editTexts){
         for(EditText editText : editTexts){
             String value;
-            value = editText.getText() == null ? null : editText.getText().toString();
+            if(editText != null) {
+                value = editText.getText() == null ? null : editText.getText().toString();
 
-            if(editText.getText() == null || editText.getText().toString().trim().isEmpty()){
-                String errorMessage = context.getString(R.string.requiredField);
-                editText.setError(errorMessage);
-                return false;
+                if (editText.getText() == null || editText.getText().toString().trim().isEmpty()) {
+                    String errorMessage = context.getString(R.string.requiredField);
+                    editText.setError(errorMessage);
+                    return false;
+                }
             }
         }
         return true;

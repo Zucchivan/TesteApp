@@ -12,7 +12,7 @@ import cast.com.br.testeapp.model.persistence.SQLiteClientRepository;
 /**
  * Created by Administrador on 20/07/2015.
  */
-public class Client implements Serializable, Parcelable {
+public class Client implements Parcelable {
 
     private Integer id;
     private String name;
