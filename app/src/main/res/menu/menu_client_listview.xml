@@ -6,7 +6,7 @@
         android:id="@+id/itemAddClient"
         android:title="@string/save"
         app:showAsAction="always"
-        android:icon="@drawable/ic_add_client"
+        android:icon="@drawable/ic_hardware_cast_connected"
         />
 
 </menu>

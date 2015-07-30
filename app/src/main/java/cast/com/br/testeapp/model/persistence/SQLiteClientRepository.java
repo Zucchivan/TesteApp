@@ -38,8 +38,8 @@ public class SQLiteClientRepository implements ClientRepository{
         if(client.getId() == null){
             db.insert(ClientContract.TABLE, null, values);
         } else {
-            String where = " ID = " + client.getId();
-            db.update(ClientContract.TABLE, values, where, null);
+            String where = " ID = ?";
+            db.update(ClientContract.TABLE, values, where, new String[]{client.getId().toString()});
         }
         db.close();
         helper.close();

@@ -40,6 +40,10 @@ public class Client implements Parcelable {
         return SQLiteClientRepository.getInstance().getAll();
     }
 
+    public void delete() {
+        SQLiteClientRepository.getInstance().delete(this);
+    }
+
     public static final Parcelable.Creator<Client> CREATOR = new Creator<Client>() {
         @Override
         public Client createFromParcel(Parcel source) {
@@ -86,13 +90,13 @@ public class Client implements Parcelable {
         if (id != null ? !id.equals(client.id) : client.id != null) return false;
         if (name != null ? !name.equals(client.name) : client.name != null) return false;
         if (age != null ? !age.equals(client.age) : client.age != null) return false;
+        if (phone != null ? !phone.equals(client.phone) : client.phone != null) return false;
         if (zipCode != null ? !zipCode.equals(client.zipCode) : client.zipCode != null) return false;
         if (streetType != null ? !streetType.equals(client.streetType) : client.streetType != null) return false;
         if (street != null ? !street.equals(client.street) : client.street != null) return false;
         if (neighborhood != null ? !neighborhood.equals(client.neighborhood) : client.neighborhood != null) return false;
         if (city != null ? !city.equals(client.city) : client.city != null) return false;
-        if (state != null ? !state.equals(client.state) : client.state != null) return false;
-        return !(phone != null ? !phone.equals(client.phone) : client.phone != null);
+        return !(state != null ? !state.equals(client.state) : client.state != null);
     }
 
     @Override
@@ -110,27 +114,9 @@ public class Client implements Parcelable {
         return result;
     }
 
-    public void delete() {
-        SQLiteClientRepository.getInstance().delete(this);
-    }
-
     @Override
     public int describeContents() {
         return 0;
-    }
-
-    private void readToParcel(Parcel in) {
-        id = in.readInt();
-        name = in.readString();
-        int partialAge = in.readInt();
-        age = partialAge == -1 ? null : partialAge;
-        phone = in.readString();
-        zipCode = in.readString();
-        streetType = in.readString();
-        street = in.readString();
-        neighborhood = in.readString();
-        city = in.readString();
-        state = in.readString();
     }
 
     @Override
@@ -145,6 +131,20 @@ public class Client implements Parcelable {
         dest.writeString(this.neighborhood == null ? "" : this.neighborhood);
         dest.writeString(this.city == null ? "" : this.city);
         dest.writeString(this.state == null ? "" : this.state);
+    }
+
+    private void readToParcel(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        int partialAge = in.readInt();
+        age = partialAge == -1 ? null : partialAge;
+        phone = in.readString();
+        zipCode = in.readString();
+        streetType = in.readString();
+        street = in.readString();
+        neighborhood = in.readString();
+        city = in.readString();
+        state = in.readString();
     }
 
     public Integer getId() {

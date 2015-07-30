@@ -135,15 +135,12 @@ public class ClientListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.itemAddClient:
-                // Create the text message with a string
                 final Intent sendIntent = new Intent(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.enjoy));
                 sendIntent.setType(HTTP.PLAIN_TEXT_TYPE);
 
-                // Create intent to show the chooser dialog
                 final Intent chooser = Intent.createChooser(sendIntent, getString(R.string.share));
 
-                // Verify the original intent will resolve to at least one activity
                 if (sendIntent.resolveActivity(getPackageManager()) != null) {
                     startActivity(chooser);
                 }

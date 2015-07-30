@@ -54,6 +54,19 @@ public class ClientCrudActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
 
+        bindFields();
+
+        if(extras != null) {
+            this.client = (Client) getIntent().getExtras().getParcelable(CLIENT_PARAM);
+            if(client != null){
+                bindForm(this.client);
+            } else {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    private void bindFields() {
         editTextName = (EditText) findViewById(R.id.editTextClientName);
         editTextName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_edittext_client, 0);
         editTextName.setOnTouchListener(new View.OnTouchListener() {
@@ -77,28 +90,28 @@ public class ClientCrudActivity extends AppCompatActivity {
         editTextAge = (EditText)findViewById(R.id.editTextClientAge);
         editTextPhone = (EditText)findViewById(R.id.editTextClientPhone);
         editTextZipCode = (EditText)findViewById(R.id.editTextClientZipCode);
+        editTextZipCode.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_edittext_client, 0);
+        editTextZipCode.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (editTextZipCode.getRight() - editTextZipCode.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        new GetAddressByCep().execute(editTextZipCode.getText().toString());
+                    }
+                }
+                return false;
+            }
+        });
         editTextStreetType = (EditText)findViewById(R.id.editTextClientStreetType);
         editTextStreet = (EditText)findViewById(R.id.editTextClientStreet);
         editTextNeighborhood = (EditText)findViewById(R.id.editTextClientNeighborhood);
         editTextCity = (EditText)findViewById(R.id.editTextClientCity);
         editTextState = (EditText)findViewById(R.id.editTextClientState);
-
-        editTextZipCode.setOnFocusChangeListener(new OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus)
-                new GetAddressByCep().execute(editTextZipCode.getText().toString());
-            }
-        });
-
-        if(extras != null) {
-            this.client = (Client) getIntent().getExtras().getParcelable(CLIENT_PARAM);
-            if(client != null){
-                bindForm(this.client);
-            } else {
-                throw new IllegalArgumentException();
-            }
-        }
     }
 
     @Override
@@ -171,12 +184,12 @@ public class ClientCrudActivity extends AppCompatActivity {
         editTextName = (EditText) findViewById(R.id.editTextClientName);
         editTextAge = (EditText)findViewById(R.id.editTextClientAge);
         editTextPhone = (EditText)findViewById(R.id.editTextClientPhone);
-        editTextZipCode = (EditText)findViewById(R.id.editTextClientPhone);
-        editTextStreetType = (EditText)findViewById(R.id.editTextClientPhone);
-        editTextStreet = (EditText)findViewById(R.id.editTextClientPhone);
-        editTextNeighborhood = (EditText)findViewById(R.id.editTextClientPhone);
-        editTextCity = (EditText)findViewById(R.id.editTextClientPhone);
-        editTextState = (EditText)findViewById(R.id.editTextClientPhone);
+        editTextZipCode = (EditText)findViewById(R.id.editTextClientZipCode);
+        editTextStreetType = (EditText)findViewById(R.id.editTextClientStreetType);
+        editTextStreet = (EditText)findViewById(R.id.editTextClientStreet);
+        editTextNeighborhood = (EditText)findViewById(R.id.editTextClientNeighborhood);
+        editTextCity = (EditText)findViewById(R.id.editTextClientCity);
+        editTextState = (EditText)findViewById(R.id.editTextClientState);
 
         edits.add(editTextName);
         edits.add(editTextAge);
@@ -210,7 +223,13 @@ public class ClientCrudActivity extends AppCompatActivity {
 
         @Override
         protected ClientAddress doInBackground(String... params) {
-            return CepService.getAddressBy(params[0]);
+            try {
+                return CepService.getAddressBy(params[0]);
+            }catch(Exception e){
+                Toast.makeText(ClientCrudActivity.this, R.string.invalidCode, Toast.LENGTH_LONG).show();
+            } finally {
+                return new ClientAddress();
+            }
         }
 
         @Override

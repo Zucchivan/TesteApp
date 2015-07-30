@@ -1,6 +1,7 @@
 package cast.com.br.testeapp.model.services;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -11,6 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import cast.com.br.testeapp.R;
+import cast.com.br.testeapp.controller.ClientCrudActivity;
 import cast.com.br.testeapp.model.entity.ClientAddress;
 
 /**
@@ -24,7 +26,7 @@ public final class CepService {
         super();
     }
 
-    public static ClientAddress getAddressBy(String cep) {
+    public static ClientAddress getAddressBy(String cep) throws Exception {
         ClientAddress address = null;
         try {
             URL url = new URL(URL + cep);
@@ -36,6 +38,7 @@ public final class CepService {
 
             if (responseCode != HttpURLConnection.HTTP_OK) {
                 Log.w("TAG", String.valueOf(R.string.serviceWarning));
+                throw new Exception(String.valueOf(R.string.serviceWarning));
             }
 
             InputStream inputStream = conn.getInputStream();

@@ -30,4 +30,6 @@
     <string name="serviceWarning">Access failed or invalid Zip Code</string>
     <string name="share">Share</string>
     <string name="enjoy">Enjoy a free app to storage your clients!</string>
+    <string name="invalidUserData">Invalid username or password!</string>
+    <string name="invalidCode">Invalid Zip Code or Connection Failed</string>
 </resources>

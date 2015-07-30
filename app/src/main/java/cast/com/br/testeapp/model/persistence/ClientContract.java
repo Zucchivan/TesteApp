@@ -89,6 +89,5 @@ public class ClientContract {
         .append(" ); ");
 
         return sb.toString();
+    }
 }
-
-        }

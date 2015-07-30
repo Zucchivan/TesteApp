@@ -13,4 +13,24 @@
     <string name="clientPhone" >Telefone</string>
     <string name="clientAddress" >Endereço</string>
     <string name="save">Salvar</string>
+    <string name="successSave">Salvo com sucesso!</string>
+    <string name="requiredField">Campo Obrigatório!</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Deletar</string>
+    <string name="deleted_message">Deletado!</string>
+    <string name="confirm_delete">Tem certeza de que deseja deletar?</string>
+    <string name="yes">Sim</string>
+    <string name="zipCode">Cep</string>
+    <string name="findZipCode">Encontrar Endereço</string>
+    <string name="streetType">Tipo de Logradouro</string>
+    <string name="street">Logradouro</string>
+    <string name="neighborhood">Bairro</string>
+    <string name="city">Cidade</string>
+    <string name="state">Estado</string>
+    <string name="loading">Carregando</string>
+    <string name="serviceWarning">Falha no acesso ou CEP inválido!</string>
+    <string name="share">Compartilhar</string>
+    <string name="enjoy">Experimente o melhor aplicativo de cadastro de clientes grátis!</string>
+    <string name="invalidUserData">Nome de usuário ou senha inválidos!</string>
+    <string name="invalidCode">CEP Inválido ou sem conexão com a internet</string>
 </resources>
